@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,hyperref}
+\hypersetup{hidelinks}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newcommand{\Av}{\mathcal{A}}
+\title{Asymptotic Popularities in a Triple Consecutive-Pattern-Avoidance Class\\[4pt]\large Class 10: Avoidance of 123, 132, and 312}
+\author{Ryutaro Yonezu\\Independent Researcher}
+\date{14 November 2026 \quad Preprint v1.0}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $\mathcal{A}_n$ denote permutations avoiding the three \emph{consecutive} patterns $123$, $132$, and $312$. An elementary minimum-element decomposition and a block injection prove that $\log|\mathcal{A}_n|/(n\log n)\to 1/2$. Consequently, the asymptotic popularities of the three remaining length-three consecutive patterns are $1/2$ for $213$, $1/2$ for $231$, and $0$ for $321$. The proof gives a concentration bound for the number of ascents in a uniformly sampled avoider. It addresses a Class 10 case listed as open in a publicly available earlier version of Hassler--Kirgizov (2026). This is an unrefereed preprint; historical novelty remains under assessment.
+\end{abstract}
+
+\section{Definitions and prior work}
+For $\pi\in S_n$, let $N_p(\pi)$ count length-three \emph{consecutive} occurrences of a pattern $p$. Put
+\[
+\Av_n=\operatorname{Av}^{\mathrm{consec}}_n(123,132,312), \quad
+A_n=|\Av_n|,\quad Q^p_n=\sum_{\pi\in\Av_n}N_p(\pi).
+\]
+The asymptotic popularity (when it exists) is $\operatorname{pop}(p)=\lim_{n\to\infty}Q_n^p/(nA_n)$. The enumeration $A_n$ is known from Kitaev (2003), and appears in OEIS A079512; we do not claim that enumeration as new. Table 1 in the accessible earlier version of Hassler--Kirgizov (2026) lists these Class 10 popularities as open. The paper published on 10 November 2026 still reports five open classes in its abstract, but an independent comparison with the final Table 1 has not been completed. General cluster methods of Elizalde--Noy (2012) provide related enumerative machinery; theorem-level historical precedence for the particular limits stated here has not been exhaustively determined.
+
+\section{Local structure and exact pattern identities}
+\begin{lemma}[Minimum-element decomposition]\label{l:min}
+For $n\ge3$, every $\pi\in\Av_n$ has $1$ in its final or penultimate position. If it is last, deleting $1$ produces an arbitrary member of $\Av_{n-1}$. If it is penultimate, $\pi=\sigma\,1\,k$ with $k\ge3$ and the standardized prefix of length $n-2$ has final rank $r\le k-2$. Conversely, either construction yields a unique admissible permutation.
+\end{lemma}
+\begin{proof}
+If $1$ occurred earlier, the factor beginning with $1$ would be $123$ or $132$. An appended last $1$ creates only a final $231$ or $321$. In the penultimate case, the last factor is $213$ exactly when the previous final value is below $k$, which in standardized rank is $r\le k-2$; otherwise it is forbidden $312$. The other newly created factor, when present, ends at $1$ and cannot be forbidden. Deletion is inverse to construction.
+\end{proof}
+Let $K(\pi)$ be the number of ascents $\pi_i<\pi_{i+1}$ and let $L(\pi)$ and $R(\pi)$ be the indicators of an ascent in the first and last adjacent pair, respectively.
+\begin{lemma}[Exact identities]\label{l:patterns}
+Every $\pi\in\Av_n$, $n\ge3$, satisfies
+\begin{align*}
+N_{213}(\pi)&=K(\pi)-L(\pi),\\
+N_{231}(\pi)&=K(\pi)-R(\pi),\\
+N_{321}(\pi)&=n-2-2K(\pi)+L(\pi)+R(\pi).
+\end{align*}
+Moreover $0\le K(\pi)\le\lceil(n-1)/2\rceil$.
+\end{lemma}
+\begin{proof}
+Two consecutive ascents would form the forbidden pattern $123$. Thus every ascent except possibly the first is preceded by a descent. That $-+$ factor must be $213$, not the forbidden $312$. Every ascent except possibly the last is followed by a descent. That $+-$ factor must be $231$, not the forbidden $132$. The remaining length-three factors are necessarily $321$. There are exactly $n-2$ such factors, giving all three formulas. Isolation of ascents yields the bound on $K$.
+\end{proof}
+
+\section{An elementary logarithmic enumeration theorem}
+\begin{theorem}[Growth exponent]\label{t:exponent}
+\[
+\lim_{n\to\infty}\frac{\log A_n}{n\log n}=\frac12.
+\]
+\end{theorem}
+\begin{proof}
+Iterate the unique decomposition of Lemma~\ref{l:min} until size $1$ or $2$. Call a step deleting a final minimum an $L$-step (size decreases by one), and a step deleting a penultimate minimum and last value a $P$-step (size decreases by two). A reverse $L$-step creates no ascent, while a reverse $P$-step appends $1,k$ and creates exactly one ascent. Consequently the number of $P$-steps is at most $K(\pi)$. A step word has at most $n$ letters, and there are at most $2^{n+1}$ such binary words; at the final base there are at most three permutations. At each reverse $P$-step the final rank $k$ has at most $n$ possible values. Therefore for every integer $t\ge0$,
+\begin{equation}\label{eq:upper}
+\#\{\pi\in\Av_n:K(\pi)\le t\}\le 3\cdot2^{n+1}n^t.
+\end{equation}
+The upper bound in the theorem follows from $K\le\lceil(n-1)/2\rceil$.
+
+For the reverse inequality, fix an arbitrary positive integer $m$ and a base size $s_0\ge8m$, and take any $\sigma_0\in\Av_{s_0}$ (for instance the decreasing permutation). For any current admissible permutation of length $s\ge s_0$, perform one reverse $L$-step (append a new minimum, so final rank is $1$), followed by $m$ reverse $P$-steps. Choose the successive final ranks $k_1<\cdots<k_m$ from the \emph{odd} ranks
+\[
+\{3,5,7,\ldots,2\lfloor s/4\rfloor+1\}.
+\]
+Since the ranks are distinct and odd, $k_1\ge3$ and $k_{j+1}\ge k_j+2$. The new size at the $j$th $P$-step is $s+1+2j$, so $k_j$ lies within its allowable range. Lemma~\ref{l:min} proves that all these operations are admissible. Their ranks are recovered uniquely by deletion, so each such block gives exactly $\binom{\lfloor s/4\rfloor}{m}$ distinct descendants and increases size by $d=2m+1$.
+
+Given $n\ge s_0$, let $B=\lfloor(n-s_0)/d\rfloor$ and $s_b=s_0+bd$. Perform $B$ blocks and then append minimum entries (reverse $L$-steps) to fill the remaining $0\le n-s_0-Bd<d$ positions. This gives an injection, hence
+\begin{equation}\label{eq:lower}
+A_n\ge\prod_{b=0}^{B-1}\binom{\lfloor s_b/4\rfloor}{m}.
+\end{equation}
+For $s_b\ge8m$, put $M_b=\lfloor s_b/4\rfloor\ge m$.
+Since $\binom{M_b}{m}\ge (M_b/m)^m$ and $M_b\ge s_b/8$, we have
+\[
+\log A_n\ge m\sum_{b=0}^{B-1}\log\frac{s_b}{8m}.
+\]
+For completeness, we make the error bound explicit. For $b\ge1$,
+$s_b=s_0+bd\ge db$, and therefore for $B\ge2$,
+\begin{align*}
+\sum_{b=0}^{B-1}\log\frac{s_b}{8m}
+&\ge \log\frac{s_0}{8m}+(B-1)\log\frac{d}{8m}+\log((B-1)!)\\
+&= B\log n-O_m(n).
+\end{align*}
+Indeed, $B=\lfloor(n-s_0)/d\rfloor=n/d+O_m(1)$, while
+$\log((B-1)!)=(B-1)\log(B-1)-(B-1)+O(\log B)$ by Stirling,
+so the preceding lower bound is $(n/d)\log n-O_m(n)$.
+Consequently
+\[
+\log A_n\ge \frac{m}{2m+1}n\log n-O_m(n).
+\]
+Thus
+\[
+\liminf_{n\to\infty}\frac{\log A_n}{n\log n}\ge\frac{m}{2m+1}.
+\]
+Because $m$ is arbitrary, this lower limit is at least $1/2$, matching the upper bound.
+\end{proof}
+
+\begin{theorem}[Class 10 asymptotic popularities]\label{t:main}
+For $\Av_n=\operatorname{Av}^{\mathrm{consec}}_n(123,132,312)$, the three limits exist and equal
+\[
+\boxed{\operatorname{pop}(213)=\frac12,\qquad
+\operatorname{pop}(231)=\frac12,\qquad
+\operatorname{pop}(321)=0.}
+\]
+More precisely, for each fixed $\varepsilon>0$, a uniformly sampled $\pi_n\in\Av_n$ satisfies
+\[
+\Pr\!\left\{K(\pi_n)\le(\tfrac12-\varepsilon)n\right\}\longrightarrow0.
+\]
+\end{theorem}
+\begin{proof}
+Fix $\varepsilon\in(0,1/2)$ and choose fixed $m$ so that $m/(2m+1)>1/2-\varepsilon/2$. The lower bound in Theorem~\ref{t:exponent} gives
+$\log A_n\ge(1/2-\varepsilon/2)n\log n-O_m(n)$.
+By \eqref{eq:upper} with $t=\lfloor(1/2-\varepsilon)n\rfloor$,
+\[
+\Pr\!\left\{K(\pi_n)\le(\tfrac12-\varepsilon)n\right\}
+\le \exp\!\left(-\tfrac{\varepsilon}{2}n\log n+O_m(n)\right)\longrightarrow0.
+\]
+Since $K(\pi_n)/n\le1/2+O(1/n)$, it follows that $K(\pi_n)/n\to1/2$ in probability. Boundedness implies $\mathbb E K(\pi_n)/n\to1/2$. Averaging the three identities of Lemma~\ref{l:patterns}, dividing by $n$, and using $0\le L,R\le1$ yields the asserted limits.
+\end{proof}
+
+\section{Reproducibility and scope}
+A standard-library Python 3 verifier checks the exact local identities by exhaustive enumeration for $3\le n\le9$, computes ascents independently by endpoint dynamic programming to $n=1200$, and checks numerical instances of the block lower bound. Independently coded C++ enumeration and marked-count checks are included in the reproduction kit. These tests validate finite instances only; the infinite statements rest on the written proof. The finite verifier was also run on Windows PowerShell 5.1 with Python 3.12 by the author, and its console output was reported as passing. No Windows console transcripts, local machine identifiers, or personal file paths are distributed.
+
+\noindent\textbf{Publication status.} This is a non-peer-reviewed mathematical preprint. Independent AI proof reviews have reported no material gap within their stated scope, but neither a formal proof assistant nor a human referee has certified the result. Historical novelty and an exhaustive theorem-level comparison with all relevant prior methods remain inconclusive. Copyright \textcopyright\ 2026 Ryutaro Yonezu. All rights reserved.
+
+\begin{thebibliography}{9}
+\bibitem{HK} N. Hassler and S. Kirgizov, \emph{Emerging consecutive pattern avoidance}, Discrete Mathematics \& Theoretical Computer Science, 28:1 (2026), doi:10.46298/dmtcs.16861, arXiv:2511.02442v3.
+\bibitem{Kit} S. Kitaev, \emph{Multi-avoidance of generalised patterns}, Discrete Mathematics 260 (2003), 89--100, doi:10.1016/S0012-365X(02)00452-1.
+\bibitem{OEIS} OEIS Foundation, \emph{A079512}, \url{https://oeis.org/A079512}.
+\bibitem{EN} S. Elizalde and M. Noy, \emph{Clusters, generating functions and asymptotics for consecutive patterns in permutations}, Advances in Applied Mathematics 49 (2012), 351--374, doi:10.1016/j.aam.2012.08.003.
+\end{thebibliography}
+\end{document}
