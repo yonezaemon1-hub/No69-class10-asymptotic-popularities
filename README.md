@@ -47,4 +47,11 @@ Hassler and Kirgizov, *Emerging consecutive pattern avoidance*, DMTCS 28:1 (2026
 
 Copyright (c) 2026 Ryutaro Yonezu. **All rights reserved.** No Creative Commons or open-source license is granted.
 
-The GitHub release and archival record contain the same three frozen assets. Their URLs and DOI are added after publication has been verified.
+## Published version
+
+- [GitHub Release v1.0](https://github.com/yonezaemon1-hub/No69-class10-asymptotic-popularities/releases/tag/v1.0)
+- [Zenodo archival record](https://zenodo.org/records/24233898)
+- Version DOI: [10.5281/zenodo.24233898](https://doi.org/10.5281/zenodo.24233898)
+- Concept DOI: [10.5281/zenodo.24233897](https://doi.org/10.5281/zenodo.24233897)
+
+Published 15 November 2026. Both services provide the same three frozen assets plus their SHA-256 manifest.
